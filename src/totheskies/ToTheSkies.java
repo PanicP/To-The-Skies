@@ -4,10 +4,13 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 
 public class ToTheSkies extends BasicGame {
+	
+	private Image Background;
 
 	public ToTheSkies(String title) {
 		super(title);
@@ -15,19 +18,18 @@ public class ToTheSkies extends BasicGame {
 	}
 
 	@Override
-	public void render(GameContainer container, Graphics arg1) throws SlickException {
-		// TODO Auto-generated method stub
-		
+	public void render(GameContainer container, Graphics g) throws SlickException {
+		Background.draw(0,0);		
 	}
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
-		// TODO Auto-generated method stub
+		Background = new Image("res/Background.jpg");
 		
 	}
 
 	@Override
-	public void update(GameContainer container, int arg1) throws SlickException {
+	public void update(GameContainer container, int delta) throws SlickException {
 		// TODO Auto-generated method stub
 		
 	}
