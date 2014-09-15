@@ -11,9 +11,12 @@ import org.newdawn.slick.SlickException;
 
 public class ToTheSkies extends BasicGame {
 	
+	public static final int GAME_HEIGHT = 600;
+	public static final int GAME_WIDTH = 800;
 	private Image Background;
 	private Spaceship Spaceship;
 	private SpaceshipAI SpaceshipAI;
+	private AsteroidLeft AsteroidLeft;
 
 	public ToTheSkies(String title) {
 		super(title);
@@ -25,6 +28,7 @@ public class ToTheSkies extends BasicGame {
 		Background.draw(0,0);
 		Spaceship.draw();
 		SpaceshipAI.draw();
+		AsteroidLeft.render();
 	}
 
 	@Override
@@ -32,6 +36,7 @@ public class ToTheSkies extends BasicGame {
 		Background = new Image("res/Background.jpg");
 		Spaceship = new Spaceship(360,480);
 		SpaceshipAI = new SpaceshipAI(360,50);
+		AsteroidLeft = new AsteroidLeft(GAME_WIDTH/2, GAME_HEIGHT/2);
 	}
 
 	@Override
