@@ -13,10 +13,12 @@ public class ToTheSkies extends BasicGame {
 	
 	public static final int GAME_HEIGHT = 600;
 	public static final int GAME_WIDTH = 800;
+	public static final float ASTEROIDLEFT_VX = -4;
 	private Image Background;
 	private Spaceship Spaceship;
 	private SpaceshipAI SpaceshipAI;
 	private AsteroidLeft AsteroidLeft;
+	
 
 	public ToTheSkies(String title) {
 		super(title);
@@ -36,7 +38,7 @@ public class ToTheSkies extends BasicGame {
 		Background = new Image("res/Background.jpg");
 		Spaceship = new Spaceship(360,480);
 		SpaceshipAI = new SpaceshipAI(360,50);
-		AsteroidLeft = new AsteroidLeft(GAME_WIDTH/2, GAME_HEIGHT/2);
+		AsteroidLeft = new AsteroidLeft(GAME_WIDTH/2, GAME_HEIGHT/2, ASTEROIDLEFT_VX);
 	}
 
 	@Override
@@ -48,6 +50,7 @@ public class ToTheSkies extends BasicGame {
 	    if (input.isKeyDown(Input.KEY_RIGHT)) {
 	      Spaceship.moveRight();
 	    }
+	    AsteroidLeft.update();
 		
 	}
 	

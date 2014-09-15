@@ -6,18 +6,25 @@ import org.newdawn.slick.SlickException;
 public class AsteroidLeft {
 	static public final int WIDTH = 80; 
 	static public final int HEIGHT = 75;
+	static public final int ASTEROID_SPACE = 10;
 	private Image AsteroidLeft;
 	private float x;
 	private float y;
+	private float vx;
 	
-	 public AsteroidLeft(float x, float y) throws SlickException {
+	 public AsteroidLeft(float x, float y, float vx) throws SlickException {
 		 this.x = x;
 		 this.y = y;
-		 AsteroidLeft = new Image("res/AsteroidLeft.png");
+		 this.vx = vx;
+		 AsteroidLeft = new Image("res/AsteroidLeft.png");		 
 	 }
 	 
 	 public void render() {
-		 AsteroidLeft.draw(x - WIDTH/2, ToTheSkies.GAME_HEIGHT - (y + 88));
+		 AsteroidLeft.draw(x - WIDTH/2, ToTheSkies.GAME_HEIGHT - (y + HEIGHT + ASTEROID_SPACE));
+	 }
+
+	 public void update() {
+		 x += vx;  
 	 }
 
 }
