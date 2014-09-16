@@ -49,7 +49,7 @@ public class ToTheSkies extends BasicGame {
 	private void initAsteroidLeft() throws SlickException {
 		AsteroidLeft = new AsteroidLeft[ASTEROIDLEFT_COUNT];
 	    for (int i = 0; i < ASTEROIDLEFT_COUNT; i++) {
-	    	AsteroidLeft[i] = new AsteroidLeft (GAME_WIDTH + 100 + 250*i, GAME_HEIGHT/2, ASTEROIDLEFT_VX);
+	    	AsteroidLeft[i] = new AsteroidLeft (GAME_WIDTH + 220*i, GAME_HEIGHT/2, ASTEROIDLEFT_VX);
 	    }
 	}
 

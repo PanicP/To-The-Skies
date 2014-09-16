@@ -24,7 +24,10 @@ public class AsteroidLeft {
 	 }
 
 	 public void update() {
-		 x += vx;  
+		 x += vx;
+		 if (x == -80) {
+			 x = 800;
+		 }
 	 }
 
 }
