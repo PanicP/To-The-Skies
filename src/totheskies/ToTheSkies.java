@@ -21,7 +21,8 @@ public class ToTheSkies extends BasicGame {
 	public static final float ASTEROIDRIGHT_VX = 4;
 	public static final float BULLET_VY = -6;
 	public static final int ASTEROID_COUNT = 4;
-	
+	public static int timer = 0 ;
+	public static int timer1000 = 0;
 	private int Bullet_Number = 0 ;
 	private Image Background;
 	private Spaceship Spaceship;
@@ -30,7 +31,6 @@ public class ToTheSkies extends BasicGame {
 	private AsteroidRight[] AsteroidRight;
 	private Bullet[] bullet;
 	private LinkedList<Entity> entities;
-	
 	
 
 	public ToTheSkies(String title) {
@@ -57,7 +57,7 @@ public class ToTheSkies extends BasicGame {
 	public void init(GameContainer container) throws SlickException {
 		Background = new Image("res/Background.jpg");
 		Spaceship = new Spaceship(360,480);
-		SpaceshipAI = new SpaceshipAI(360,50);
+		SpaceshipAI = new SpaceshipAI(360,50,0);
 		bullet = new Bullet[100];
 		entities.add(Spaceship);
 		entities.add(SpaceshipAI);
@@ -100,7 +100,14 @@ public class ToTheSkies extends BasicGame {
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
 		Input input = container.getInput();
-		
+		timer += delta ;
+		timer1000 = timer/1000;
+		//timer1000 += 1;
+		//System.out.println(timer);
+		//if (timer1000 >= 1000) {
+			//timer1000 = 0;
+			//System.out.println(timer/1000);
+		//}
 	    if (input.isKeyDown(Input.KEY_LEFT)) {
 	    	Spaceship.moveLeft();
 	    }
@@ -117,13 +124,14 @@ public class ToTheSkies extends BasicGame {
 	    for (Entity entity : entities) {
 	    	entity.update(container, delta);
 	    }
+	    SpaceshipAI.update();
 	}
 	
 	public static void main(String[] args) {
 		try {
 			ToTheSkies game = new ToTheSkies("ToTheSkies");
 			AppGameContainer appgc = new AppGameContainer(game);
-			appgc.setMinimumLogicUpdateInterval(1000 / 60);
+			appgc.setMinimumLogicUpdateInterval(1000/60);
 			appgc.setDisplayMode(800, 600, false);
 			appgc.start();
 	    	} catch (SlickException e) {

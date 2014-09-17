@@ -34,6 +34,7 @@ public class Spaceship implements Entity {
 	}
 	
 	public void update() {
+		
 		if (x < 80) {
 			x = 80;
 		}
