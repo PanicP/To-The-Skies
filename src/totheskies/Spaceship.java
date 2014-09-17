@@ -1,9 +1,10 @@
 package totheskies;
 
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-public class Spaceship {
+public class Spaceship implements Entity {
 	private Image image;
 	private int x;
 	private int y;
@@ -14,16 +15,41 @@ public class Spaceship {
 		this.y = y;
 	}
 
-	public void draw() {
-		image.draw(x,y);
-		
-	}
-
 	public void moveLeft() {
-		this.x -= 8;		
+		this.x -= 8;
+		update();
 	}
 
 	public void moveRight() {
 		this.x += 8;	
+		update();
+	}
+	
+	public float getX() {
+		return x;
+	}
+	
+	public float getY() {
+		return y;
+	}
+	
+	public void update() {
+		if (x < 80) {
+			x = 80;
+		}
+		if (x > 640) {
+			x = 640;
+		}
+	}
+
+	@Override
+	public void render() {
+		image.draw(x,y);
+	}
+
+	@Override
+	public void update(GameContainer container, int delta) {
+		// TODO Auto-generated method stub
+		
 	}
 }
