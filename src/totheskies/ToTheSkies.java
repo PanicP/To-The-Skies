@@ -20,18 +20,21 @@ public class ToTheSkies extends BasicGame {
 	public static final float ASTEROIDLEFT_VX = -4;
 	public static final float ASTEROIDRIGHT_VX = 4;
 	public static final float BULLET_VY = -6;
+	public static final float BULLETAI_VY = 6;
 	public static final int ASTEROID_COUNT = 4;
 	public static int timer = 0 ;
 	public static int timer1000 = 0;
 	private int Bullet_Number = 0 ;
+	private int BulletAI_Number = 0 ;
 	private Image Background;
 	private Spaceship Spaceship;
 	private SpaceshipAI SpaceshipAI;
 	private AsteroidLeft[] AsteroidLeft;
 	private AsteroidRight[] AsteroidRight;
 	private Bullet[] bullet;
+	private BulletAI[] bulletAI;
 	private LinkedList<Entity> entities;
-	
+	private int CheckBulletAIWithTimer; 
 
 	public ToTheSkies(String title) {
 		super(title);
@@ -59,6 +62,7 @@ public class ToTheSkies extends BasicGame {
 		Spaceship = new Spaceship(360,480);
 		SpaceshipAI = new SpaceshipAI(360,50,0);
 		bullet = new Bullet[100];
+		bulletAI = new BulletAI[100];
 		entities.add(Spaceship);
 		entities.add(SpaceshipAI);
 		initAsteroidLeft();
@@ -93,9 +97,25 @@ public class ToTheSkies extends BasicGame {
 				}
 			entities.add(bullet[Bullet_Number]);
 			Bullet_Number++;
-			System.out.println(Bullet_Number);
+			//System.out.println(Bullet_Number);
 		}
-	}
+		if (key == Input.KEY_Q || key == Input.KEY_W) {
+			if(BulletAI_Number == 100){
+				BulletAI_Number = 0;
+			}
+				try {
+					bullet[BulletAI_Number] = new Bullet(SpaceshipAI.getX(),SpaceshipAI.getY(),BULLETAI_VY);
+				} catch (SlickException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				entities.add(bulletAI[BulletAI_Number]);
+				BulletAI_Number++;
+				//System.out.println(BulletAI_Number);
+				
+			}
+		}
+	
 
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
@@ -125,7 +145,15 @@ public class ToTheSkies extends BasicGame {
 	    	entity.update(container, delta);
 	    }
 	    SpaceshipAI.update();
+		//initBulletAI();
 	}
+
+	//private void initBulletAI() {
+	//	if(CheckBulletAIWithTimer < timer) {
+			
+			//CheckBulletAIWithTimer = timer;
+	//	}
+	
 	
 	public static void main(String[] args) {
 		try {

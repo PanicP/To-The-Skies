@@ -4,16 +4,14 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-public class Bullet implements Entity{
-	
-	public static final int BULLET_SPEED = 4;
+public class BulletAI implements Entity {
 	private Image image;
 	private float x;
 	private float y;
 	private float vy;
 	
-	public Bullet(float x, float y, float vy) throws SlickException {
-		image = new Image("res/Bullet.png");
+	public BulletAI(float x, float y, float vy) throws SlickException {
+		image = new Image("res/BulletAI.png");
 		this.x = x;
 		this.y = y;
 		this.vy = vy;
@@ -30,4 +28,5 @@ public class Bullet implements Entity{
 		y += vy;
 		
 	}
+
 }
