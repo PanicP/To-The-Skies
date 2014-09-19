@@ -97,14 +97,6 @@ public class ToTheSkies extends BasicGame {
 				e.printStackTrace();
 			}
 		}
-		if (key == Input.KEY_Q || key == Input.KEY_W) {
-			try {
-				bulletAI.add(new BulletAI(SpaceshipAI.getX()+38,SpaceshipAI.getY()+63,BULLETAI_VY));
-			} catch (SlickException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 	}
 		
 	
@@ -143,6 +135,10 @@ public class ToTheSkies extends BasicGame {
 	    for(BulletAI bulletsAI : bulletAI) {
 			bulletsAI.update(container, delta);
 		}
+	    if(timer % 7 == 0) {
+	    	bulletAI.add(new BulletAI(SpaceshipAI.getX()+38,SpaceshipAI.getY()+63,BULLETAI_VY));
+	    }
+	    
 		//initBulletAI();
 	}
 
