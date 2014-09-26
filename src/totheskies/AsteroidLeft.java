@@ -22,6 +22,14 @@ public class AsteroidLeft {
 	 public void render() {
 		 AsteroidLeft.draw(x - WIDTH/2, ToTheSkies.GAME_HEIGHT - (y + HEIGHT + ASTEROID_SPACE));
 	 }
+	 public float getX() {
+		return x;
+	 }
+		
+	 public float getY() {
+		return y;
+	 }
+
 
 	 public void update() {
 		 x += vx;
@@ -29,5 +37,17 @@ public class AsteroidLeft {
 			 x = 800;
 		 }
 	 }
-
+	 public boolean isCollide(Bullet b) {
+			if (Math.abs(b.getX()-x) < 39 && Math.abs(b.getY()-y) < 37) {
+					return true;
+				}
+			return false;
+	 }
+	 
+	 public boolean isCollide(BulletAI b) {
+		 	if (Math.abs(b.getX()-x) < 39 && -75+Math.abs(b.getY()-y) < 37) {
+		 			return true;
+				}
+		 	return false;
+	 }
 }

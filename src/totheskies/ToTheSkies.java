@@ -26,16 +26,15 @@ public class ToTheSkies extends BasicGame {
 	public static int timer = 0 ;
 	public static int timer1000 = 0;
 	
-	private int BulletAI_Number = 0 ;
-	private Image Background;
-	private Spaceship Spaceship;
-	private SpaceshipAI SpaceshipAI;
-	private AsteroidLeft[] AsteroidLeft;
-	private AsteroidRight[] AsteroidRight;
+	private Image background;
+	private Spaceship spaceship;
+	private SpaceshipAI spaceshipAI;
+	private AsteroidLeft[] asteroidLeft;
+	private AsteroidRight[] asteroidRight;
 	private ArrayList<Bullet> bullet = new ArrayList<Bullet>();
 	private ArrayList<BulletAI> bulletAI = new ArrayList<BulletAI>();
-	private LinkedList<Entity> entities;
-	private int CheckBulletAIWithTimer; 
+	private LinkedList<Entity> entities; 
+	private int countCollide = 0;
 
 	public ToTheSkies(String title) {
 		super(title);
@@ -44,7 +43,7 @@ public class ToTheSkies extends BasicGame {
 
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
-		Background.draw(0,0);
+		background.draw(0,0);
 		for(Entity entity : entities) {
 			entity.render();
 		}
@@ -54,36 +53,36 @@ public class ToTheSkies extends BasicGame {
 		for(BulletAI bulletsAI : bulletAI) {
 			bulletsAI.render();
 		}
-		for (AsteroidLeft AsteroidLeft : AsteroidLeft) {
-			AsteroidLeft.render();
+		for (AsteroidLeft AsteroidsLeft : asteroidLeft) {
+			AsteroidsLeft.render();
 		}
-		for (AsteroidRight AsteroidRight : AsteroidRight) {
-			AsteroidRight.render();
+		for (AsteroidRight AsteroidsRight : asteroidRight) {
+			AsteroidsRight.render();
 		}
 	}
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
-		Background = new Image("res/Background.jpg");
-		Spaceship = new Spaceship(360,480);
-		SpaceshipAI = new SpaceshipAI(360,50,0);
-		entities.add(Spaceship);
-		entities.add(SpaceshipAI);
+		background = new Image("res/Background.jpg");
+		spaceship = new Spaceship(360,480);
+		spaceshipAI = new SpaceshipAI(360,50,0);
+		entities.add(spaceship);
+		entities.add(spaceshipAI);
 		initAsteroidLeft();
 		initAsteroidRight();
 	}
 
 	private void initAsteroidLeft() throws SlickException {
-		AsteroidLeft = new AsteroidLeft[ASTEROID_COUNT];
+		asteroidLeft = new AsteroidLeft[ASTEROID_COUNT];
 	    for (int i = 0; i < ASTEROID_COUNT; i++) {
-	    	AsteroidLeft[i] = new AsteroidLeft (220*i, GAME_HEIGHT/2, ASTEROIDLEFT_VX);
+	    	asteroidLeft[i] = new AsteroidLeft (220*i, GAME_HEIGHT/2, ASTEROIDLEFT_VX);
 	    }
 	}
 
 	private void initAsteroidRight() throws SlickException {
-		AsteroidRight = new AsteroidRight[ASTEROID_COUNT];
+		asteroidRight = new AsteroidRight[ASTEROID_COUNT];
 	    for (int i = 0; i < ASTEROID_COUNT; i++) {
-	    	AsteroidRight[i] = new AsteroidRight (600 + (-220)*i, GAME_HEIGHT/2, ASTEROIDRIGHT_VX);
+	    	asteroidRight[i] = new AsteroidRight (600 + (-220)*i, GAME_HEIGHT/2, ASTEROIDRIGHT_VX);
 	    }
 	}
 	
@@ -91,7 +90,7 @@ public class ToTheSkies extends BasicGame {
 	public void keyPressed(int key, char c) { 
 		if (key == Input.KEY_Z || key == Input.KEY_X) {
 			try {
-				bullet.add(new Bullet(Spaceship.getX()+35,Spaceship.getY()-10,BULLET_VY));
+				bullet.add(new Bullet(spaceship.getX()+35,spaceship.getY()-10,BULLET_VY));
 			} catch (SlickException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -106,6 +105,7 @@ public class ToTheSkies extends BasicGame {
 		Input input = container.getInput();
 		timer += delta ;
 		timer1000 = timer/1000;
+		spaceshipAI.update();
 		//timer1000 += 1;
 		//System.out.println(timer);
 		//if (timer1000 >= 1000) {
@@ -113,32 +113,74 @@ public class ToTheSkies extends BasicGame {
 			//System.out.println(timer/1000);
 		//}
 	    if (input.isKeyDown(Input.KEY_LEFT)) {
-	    	Spaceship.moveLeft();
+	    	spaceship.moveLeft();
 	    }
 	    if (input.isKeyDown(Input.KEY_RIGHT)) {
-	    	Spaceship.moveRight();
+	    	spaceship.moveRight();
 	    }
 	    
 	    for (int i = 0; i < ASTEROID_COUNT; i++) {
-	    	AsteroidLeft[i].update();
+	    	asteroidLeft[i].update();
 	    }
 	    for (int i = 0; i < ASTEROID_COUNT; i++) {
-	    	AsteroidRight[i].update();
+	    	asteroidRight[i].update();
 	    }
 	    for (Entity entity : entities) {
 	    	entity.update(container, delta);
 	    }
-	    SpaceshipAI.update();
+	    
 	    for(Bullet bullets : bullet) {
 			bullets.update(container, delta);
 		}
 	    for(BulletAI bulletsAI : bulletAI) {
 			bulletsAI.update(container, delta);
 		}
-	    if(timer % 7 == 0) {
-	    	bulletAI.add(new BulletAI(SpaceshipAI.getX()+38,SpaceshipAI.getY()+63,BULLETAI_VY));
+	    if(timer % 7 == 0 && timer > 1000) {
+	    	bulletAI.add(new BulletAI(spaceshipAI.getX()+38,spaceshipAI.getY()+63,BULLETAI_VY));
+	    }
+	    for(int i = 0 ; i < ASTEROID_COUNT ; i++) {
+	    	for(int j = 0 ; j < bullet.size() ; j++) {
+	    		Bullet temp = bullet.get(j);
+	    		if(asteroidLeft[i].isCollide(temp)) {
+	    			System.out.println("COllide" + countCollide);
+	    			countCollide++;
+	    		}
+	    		if(asteroidRight[i].isCollide(temp)) {
+	    			System.out.println("COllide" + countCollide);
+	    			countCollide++;
+	    		}
+	    		
+	    	}
+	    }
+	    for(int j = 0 ; j < bullet.size() ; j++) {
+    		Bullet temp = bullet.get(j);
+    		if(spaceshipAI.isCollide(temp)) {
+    			System.out.println("COllide" + countCollide);
+    			countCollide++;
+    		}
 	    }
 	    
+	    for(int f = 0 ; f < ASTEROID_COUNT ; f++) {
+	    	for(int e = 0 ; e < bulletAI.size() ; e++) {
+	    		BulletAI tempAI = bulletAI.get(e);
+	    		if(asteroidLeft[f].isCollide(tempAI)) {
+	    			System.out.println("COllide" + countCollide);
+	    			countCollide++;
+	    		}
+	    		if(asteroidRight[f].isCollide(tempAI)) {
+	    			System.out.println("COllide" + countCollide);
+	    			countCollide++;
+	    		}
+	    		
+	    	}
+	    }
+	    for(int k = 0 ; k < bulletAI.size() ; k++) {
+    		BulletAI tempAI = bulletAI.get(k);
+    		if(spaceship.isCollide(tempAI)) {
+    			System.out.println("COllide" + countCollide);
+    			countCollide++;
+    		}
+	    }
 		//initBulletAI();
 	}
 
@@ -147,7 +189,6 @@ public class ToTheSkies extends BasicGame {
 			
 			//CheckBulletAIWithTimer = timer;
 	//	}
-	
 	
 	public static void main(String[] args) {
 		try {

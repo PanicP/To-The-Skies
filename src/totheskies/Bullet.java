@@ -18,16 +18,29 @@ public class Bullet implements Entity{
 		this.y = y;
 		this.vy = vy;
 	}
+	
+	public float getX() {
+		return x;
+	}
+	
+	public float getY() {
+		return y;
+	}
 
 	@Override
 	public void render() {
 		image.draw(x,y);
 		
 	}
+	
 
 	@Override
 	public void update(GameContainer container, int delta) {
 		y += vy;
-		
+	//	for (AsteroidLeft AsteroidsLeft : ToTheSkies.asteroidLeft) {
+	//		if (x <= AsteroidsLeft.getX() + 80 && x >= AsteroidsLeft.getX() && y <= AsteroidsLeft.getY() + 75 && y >= AsteroidsLeft.getY()) {
+	//			System.out.println("Collide!");
+	//		}
+	//	}
 	}
 }

@@ -53,4 +53,10 @@ public class Spaceship implements Entity {
 		// TODO Auto-generated method stub
 		
 	}
+	public boolean isCollide(BulletAI b) {
+		if (b.getX()-x+80 > 80 && b.getX()-x+80 < 160 && b.getY()-y+70 > 70 && b.getY()-y+70 < 140) {
+					return true;
+					}
+		return false;
+	}
 }

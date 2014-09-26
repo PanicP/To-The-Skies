@@ -21,6 +21,20 @@ public class AsteroidRight {
 	 public void render() {
 		 AsteroidRight.draw(x - WIDTH/2, ToTheSkies.GAME_HEIGHT - (y - AsteroidLeft.ASTEROID_SPACE));
 	 }
+	 
+	 public boolean isCollide(Bullet b) {
+			if (Math.abs(b.getX()-x) < 39 && Math.abs(b.getY()-y-60) < 37) {
+						return true;
+						}
+			return false;
+	 }
+	 
+	 public boolean isCollide(BulletAI b) {
+			if (Math.abs(b.getX()-x) < 39 && Math.abs(b.getY()-y)+25 < 37) {
+						return true;
+						}
+			return false;
+	 }
 
 	 public void update() {
 		 x += vx;

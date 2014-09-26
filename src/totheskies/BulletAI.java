@@ -28,5 +28,13 @@ public class BulletAI implements Entity {
 		y += vy;
 		
 	}
+	
+	public float getX() {
+		return x;
+	}
+	
+	public float getY() {
+		return y;
+	}
 
 }
