@@ -9,7 +9,9 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 
 import totheskies.AsteroidLeft;
 
@@ -32,6 +34,10 @@ public class ToTheSkies extends BasicGame {
 	public static int HPcount = 10;
 	public static int HPcountAI = 10;
 	
+	private Sound soundshoot;
+	private Sound soundgothit;
+	private Sound soundhitAI;
+	private Music music;
 	private Image background;
 	private HP hp;
 	private HPAI hpAI;
@@ -77,6 +83,12 @@ public class ToTheSkies extends BasicGame {
 	@Override
 	public void init(GameContainer container) throws SlickException {
 		background = new Image("res/Background.jpg");
+		music = new Music("res/SpaceSoundTrack.ogg");
+		music.loop();
+		music.setVolume(4.0f);
+		soundshoot = new Sound("res/shoot.ogg");
+		soundgothit = new Sound("res/gothit.ogg");
+		soundhitAI = new Sound("res/hitAI.ogg");
 		hp = new HP(HPBAR_X,HPBAR_Y);
 		hpAI = new HPAI(HPBARAI_X,HPBARAI_Y);
 		hpbar = new HPbar(HPBAR_X + 10,HPBAR_Y + 10);
@@ -91,7 +103,6 @@ public class ToTheSkies extends BasicGame {
 		entities.add(spaceshipAI);
 		initAsteroidLeft();
 		initAsteroidRight();
-		isStarted = false;
 	}
 
 	private void initAsteroidLeft() throws SlickException {
@@ -116,6 +127,7 @@ public class ToTheSkies extends BasicGame {
 		if (key == Input.KEY_Z || key == Input.KEY_X) {			
 			try {
 				bullet.add(new Bullet(spaceship.getX()+35,spaceship.getY()-10,BULLET_VY));
+				soundshoot.play();
 			} catch (SlickException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -123,7 +135,7 @@ public class ToTheSkies extends BasicGame {
 		}
 	}
 		
-	public  void reset() throws SlickException{
+	/*public  void reset() throws SlickException{
 		if (isStarted == true){
 			hp = new HP(HPBAR_X,HPBAR_Y);
 			hpAI = new HPAI(HPBARAI_X,HPBARAI_Y);
@@ -141,7 +153,7 @@ public class ToTheSkies extends BasicGame {
 			initAsteroidRight();
 		//isGameOver = false ;
 		}
-	}
+	}*/
 
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
@@ -206,6 +218,7 @@ public class ToTheSkies extends BasicGame {
 						countCollide++;
 						HPcountAI--;
 						bullet.remove(j);
+						soundhitAI.play();
 					}	
 				}
 	    
@@ -231,6 +244,7 @@ public class ToTheSkies extends BasicGame {
 						countCollide++;
 						HPcount--;
 						bulletAI.remove(k);
+						soundgothit.play();
 					}
 				}
 				if(HPcount == 0 || HPcountAI == 0)
