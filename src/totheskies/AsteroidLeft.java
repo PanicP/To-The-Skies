@@ -38,14 +38,14 @@ public class AsteroidLeft {
 		 }
 	 }
 	 public boolean isCollide(Bullet b) {
-			if (Math.abs(b.getX()-x) < 39 && Math.abs(b.getY()-y) < 37) {
+			if (Math.abs(b.getX()-x) < 39 && Math.abs(b.getY()-y + 55) < 37) {
 					return true;
 				}
 			return false;
 	 }
 	 
 	 public boolean isCollide(BulletAI b) {
-		 	if (Math.abs(b.getX()-x) < 39 && -75+Math.abs(b.getY()-y) < 37) {
+		 	if (Math.abs(b.getX()-x) < 39 && Math.abs(b.getY()-y+65) < 37) {
 		 			return true;
 				}
 		 	return false;

@@ -85,7 +85,7 @@ public class SpaceshipAI implements Entity {
 	}
 	
 	public boolean isCollide(Bullet b) {
-		if (b.getX()-x+80 > 80 && b.getX()-x+80 < 160 && b.getY()-y+70 > 70 && b.getY()-y+70 < 140) {
+		if (b.getX()-x+80 > 80 && b.getX()-x+80 < 160 && b.getY()-y+70 > 70 && b.getY()-y+70 < 135) {
 					return true;
 					}
 		return false;

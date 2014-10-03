@@ -20,8 +20,8 @@ public class ToTheSkies extends BasicGame {
 	public static final int GAME_WIDTH = 800;
 	public static final float ASTEROIDLEFT_VX = -4;
 	public static final float ASTEROIDRIGHT_VX = 4;
-	public static final float BULLET_VY = -6;
-	public static final float BULLETAI_VY = 6;
+	public static final float BULLET_VY = -8;
+	public static final float BULLETAI_VY = 8;
 	public static final int ASTEROID_COUNT = 4;
 	public static int timer = 0 ;
 	public static int timer1000 = 0;
@@ -144,10 +144,12 @@ public class ToTheSkies extends BasicGame {
 	    		if(asteroidLeft[i].isCollide(temp)) {
 	    			System.out.println("COllide" + countCollide);
 	    			countCollide++;
+	    			bullet.remove(j);
 	    		}
 	    		if(asteroidRight[i].isCollide(temp)) {
 	    			System.out.println("COllide" + countCollide);
 	    			countCollide++;
+	    			bullet.remove(j);
 	    		}
 	    		
 	    	}
@@ -157,6 +159,7 @@ public class ToTheSkies extends BasicGame {
     		if(spaceshipAI.isCollide(temp)) {
     			System.out.println("COllide" + countCollide);
     			countCollide++;
+    			bullet.remove(j);
     		}
 	    }
 	    
@@ -166,10 +169,12 @@ public class ToTheSkies extends BasicGame {
 	    		if(asteroidLeft[f].isCollide(tempAI)) {
 	    			System.out.println("COllide" + countCollide);
 	    			countCollide++;
+	    			bulletAI.remove(e);
 	    		}
 	    		if(asteroidRight[f].isCollide(tempAI)) {
 	    			System.out.println("COllide" + countCollide);
 	    			countCollide++;
+	    			bulletAI.remove(e);
 	    		}
 	    		
 	    	}
@@ -179,6 +184,7 @@ public class ToTheSkies extends BasicGame {
     		if(spaceship.isCollide(tempAI)) {
     			System.out.println("COllide" + countCollide);
     			countCollide++;
+    			bulletAI.remove(k);
     		}
 	    }
 		//initBulletAI();

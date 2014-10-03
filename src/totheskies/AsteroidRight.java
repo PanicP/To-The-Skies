@@ -23,14 +23,14 @@ public class AsteroidRight {
 	 }
 	 
 	 public boolean isCollide(Bullet b) {
-			if (Math.abs(b.getX()-x) < 39 && Math.abs(b.getY()-y-60) < 37) {
+			if (Math.abs(b.getX()-x) < 39 && Math.abs(b.getY()-y-40) < 37) {
 						return true;
 						}
 			return false;
 	 }
 	 
 	 public boolean isCollide(BulletAI b) {
-			if (Math.abs(b.getX()-x) < 39 && Math.abs(b.getY()-y)+25 < 37) {
+			if (Math.abs(b.getX()-x) < 34 && Math.abs(b.getY()-y-37) < 37) {
 						return true;
 						}
 			return false;
