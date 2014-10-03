@@ -23,10 +23,20 @@ public class ToTheSkies extends BasicGame {
 	public static final float BULLET_VY = -8;
 	public static final float BULLETAI_VY = 8;
 	public static final int ASTEROID_COUNT = 4;
+	public static final int HPBAR_X = 15 ;
+	public static final int HPBAR_Y = 405 ;
+	public static final int HPBARAI_X = 735 ;
+	public static final int HPBARAI_Y = 25 ;
 	public static int timer = 0 ;
 	public static int timer1000 = 0;
+	public static int HPcount = 10;
+	public static int HPcountAI = 10;
 	
 	private Image background;
+	private HP hp;
+	private HPAI hpAI;
+	private HPbar hpbar;
+	private HPbarAI hpbarAI;
 	private Spaceship spaceship;
 	private SpaceshipAI spaceshipAI;
 	private AsteroidLeft[] asteroidLeft;
@@ -35,6 +45,7 @@ public class ToTheSkies extends BasicGame {
 	private ArrayList<BulletAI> bulletAI = new ArrayList<BulletAI>();
 	private LinkedList<Entity> entities; 
 	private int countCollide = 0;
+	
 
 	public ToTheSkies(String title) {
 		super(title);
@@ -64,8 +75,16 @@ public class ToTheSkies extends BasicGame {
 	@Override
 	public void init(GameContainer container) throws SlickException {
 		background = new Image("res/Background.jpg");
+		hp = new HP(HPBAR_X,HPBAR_Y);
+		hpAI = new HPAI(HPBARAI_X,HPBARAI_Y);
+		hpbar = new HPbar(HPBAR_X + 10,HPBAR_Y + 10);
+		hpbarAI = new HPbarAI(HPBARAI_X + 10,HPBARAI_Y + 10);
 		spaceship = new Spaceship(360,480);
 		spaceshipAI = new SpaceshipAI(360,50,0);
+		entities.add(hp);
+		entities.add(hpAI);
+		entities.add(hpbar);
+		entities.add(hpbarAI);
 		entities.add(spaceship);
 		entities.add(spaceshipAI);
 		initAsteroidLeft();
@@ -159,6 +178,7 @@ public class ToTheSkies extends BasicGame {
     		if(spaceshipAI.isCollide(temp)) {
     			System.out.println("COllide" + countCollide);
     			countCollide++;
+    			HPcountAI--;
     			bullet.remove(j);
     		}
 	    }
@@ -184,6 +204,7 @@ public class ToTheSkies extends BasicGame {
     		if(spaceship.isCollide(tempAI)) {
     			System.out.println("COllide" + countCollide);
     			countCollide++;
+    			HPcount--;
     			bulletAI.remove(k);
     		}
 	    }
