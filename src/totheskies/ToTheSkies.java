@@ -20,8 +20,8 @@ public class ToTheSkies extends BasicGame {
 	public static final int GAME_WIDTH = 800;
 	public static final float ASTEROIDLEFT_VX = -4;
 	public static final float ASTEROIDRIGHT_VX = 4;
-	public static final float BULLET_VY = -8;
-	public static final float BULLETAI_VY = 8;
+	public static final float BULLET_VY = -6;
+	public static final float BULLETAI_VY = 12;
 	public static final int ASTEROID_COUNT = 4;
 	public static final int HPBAR_X = 15 ;
 	public static final int HPBAR_Y = 405 ;
@@ -45,6 +45,8 @@ public class ToTheSkies extends BasicGame {
 	private ArrayList<BulletAI> bulletAI = new ArrayList<BulletAI>();
 	private LinkedList<Entity> entities; 
 	private int countCollide = 0;
+	private boolean isStarted;
+	//private boolean isGameOver;
 	
 
 	public ToTheSkies(String title) {
@@ -89,6 +91,7 @@ public class ToTheSkies extends BasicGame {
 		entities.add(spaceshipAI);
 		initAsteroidLeft();
 		initAsteroidRight();
+		isStarted = false;
 	}
 
 	private void initAsteroidLeft() throws SlickException {
@@ -107,7 +110,10 @@ public class ToTheSkies extends BasicGame {
 	
 	@Override
 	public void keyPressed(int key, char c) { 
-		if (key == Input.KEY_Z || key == Input.KEY_X) {
+		if (key == Input.KEY_ENTER) {
+			isStarted = true;
+		}
+		if (key == Input.KEY_Z || key == Input.KEY_X) {			
 			try {
 				bullet.add(new Bullet(spaceship.getX()+35,spaceship.getY()-10,BULLET_VY));
 			} catch (SlickException e) {
@@ -117,99 +123,125 @@ public class ToTheSkies extends BasicGame {
 		}
 	}
 		
-	
+	public  void reset() throws SlickException{
+		if (isStarted == true){
+			hp = new HP(HPBAR_X,HPBAR_Y);
+			hpAI = new HPAI(HPBARAI_X,HPBARAI_Y);
+			hpbar = new HPbar(HPBAR_X + 10,HPBAR_Y + 10);
+			hpbarAI = new HPbarAI(HPBARAI_X + 10,HPBARAI_Y + 10);
+			spaceship = new Spaceship(360,480);
+			spaceshipAI = new SpaceshipAI(360,50,0);
+			entities.add(hp);
+			entities.add(hpAI);
+			entities.add(hpbar);
+			entities.add(hpbarAI);
+			entities.add(spaceship);
+			entities.add(spaceshipAI);
+			initAsteroidLeft();
+			initAsteroidRight();
+		//isGameOver = false ;
+		}
+	}
 
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
 		Input input = container.getInput();
-		timer += delta ;
-		timer1000 = timer/1000;
-		spaceshipAI.update();
+		//if(!isGameOver)
+		//{
+			if (isStarted == true) {
+				timer += delta ;
+				timer1000 = timer/1000;
+				spaceshipAI.update();
 		//timer1000 += 1;
 		//System.out.println(timer);
 		//if (timer1000 >= 1000) {
 			//timer1000 = 0;
 			//System.out.println(timer/1000);
 		//}
-	    if (input.isKeyDown(Input.KEY_LEFT)) {
-	    	spaceship.moveLeft();
-	    }
-	    if (input.isKeyDown(Input.KEY_RIGHT)) {
-	    	spaceship.moveRight();
-	    }
+				if (input.isKeyDown(Input.KEY_LEFT)) {
+					spaceship.moveLeft();
+				}
+				if (input.isKeyDown(Input.KEY_RIGHT)) {
+					spaceship.moveRight();
+				}
 	    
-	    for (int i = 0; i < ASTEROID_COUNT; i++) {
-	    	asteroidLeft[i].update();
-	    }
-	    for (int i = 0; i < ASTEROID_COUNT; i++) {
-	    	asteroidRight[i].update();
-	    }
-	    for (Entity entity : entities) {
-	    	entity.update(container, delta);
-	    }
+				for (int i = 0; i < ASTEROID_COUNT; i++) {
+					asteroidLeft[i].update();
+				}
+				for (int i = 0; i < ASTEROID_COUNT; i++) {
+					asteroidRight[i].update();
+				}
+				for (Entity entity : entities) {
+					entity.update(container, delta);
+				}
 	    
-	    for(Bullet bullets : bullet) {
-			bullets.update(container, delta);
+				for(Bullet bullets : bullet) {
+					bullets.update(container, delta);
+				}
+				for(BulletAI bulletsAI : bulletAI) {
+					bulletsAI.update(container, delta);
+				}
+				if(timer % 7 == 0 && timer > 1000) {
+					bulletAI.add(new BulletAI(spaceshipAI.getX()+38,spaceshipAI.getY()+63,BULLETAI_VY));
+				}
+				for(int i = 0 ; i < ASTEROID_COUNT ; i++) {
+					for(int j = 0 ; j < bullet.size() ; j++) {
+						Bullet temp = bullet.get(j);
+						if(asteroidLeft[i].isCollide(temp)) {
+							System.out.println("COllide" + countCollide);
+							countCollide++;
+							bullet.remove(j);
+						}
+						if(asteroidRight[i].isCollide(temp)) {
+							System.out.println("COllide" + countCollide);
+							countCollide++;
+							bullet.remove(j);
+						}
+					}
+				}
+				for(int j = 0 ; j < bullet.size() ; j++) {
+					Bullet temp = bullet.get(j);
+					if(spaceshipAI.isCollide(temp)) {
+						System.out.println("COllide" + countCollide);
+						countCollide++;
+						HPcountAI--;
+						bullet.remove(j);
+					}	
+				}
+	    
+				for(int f = 0 ; f < ASTEROID_COUNT ; f++) {
+					for(int e = 0 ; e < bulletAI.size() ; e++) {
+						BulletAI tempAI = bulletAI.get(e);
+						if(asteroidLeft[f].isCollide(tempAI)) {
+							System.out.println("COllide" + countCollide);
+							countCollide++;
+							bulletAI.remove(e);
+						}
+						if(asteroidRight[f].isCollide(tempAI)) {
+							System.out.println("COllide" + countCollide);
+							countCollide++;
+							bulletAI.remove(e);
+						}
+					}
+				}
+				for(int k = 0 ; k < bulletAI.size() ; k++) {
+					BulletAI tempAI = bulletAI.get(k);
+					if(spaceship.isCollide(tempAI)) {
+						System.out.println("COllide" + countCollide);
+						countCollide++;
+						HPcount--;
+						bulletAI.remove(k);
+					}
+				}
+				if(HPcount == 0 || HPcountAI == 0)
+				{
+					isStarted = false;
+					//isGameOver = true;
+				}
+			}
 		}
-	    for(BulletAI bulletsAI : bulletAI) {
-			bulletsAI.update(container, delta);
-		}
-	    if(timer % 7 == 0 && timer > 1000) {
-	    	bulletAI.add(new BulletAI(spaceshipAI.getX()+38,spaceshipAI.getY()+63,BULLETAI_VY));
-	    }
-	    for(int i = 0 ; i < ASTEROID_COUNT ; i++) {
-	    	for(int j = 0 ; j < bullet.size() ; j++) {
-	    		Bullet temp = bullet.get(j);
-	    		if(asteroidLeft[i].isCollide(temp)) {
-	    			System.out.println("COllide" + countCollide);
-	    			countCollide++;
-	    			bullet.remove(j);
-	    		}
-	    		if(asteroidRight[i].isCollide(temp)) {
-	    			System.out.println("COllide" + countCollide);
-	    			countCollide++;
-	    			bullet.remove(j);
-	    		}
-	    		
-	    	}
-	    }
-	    for(int j = 0 ; j < bullet.size() ; j++) {
-    		Bullet temp = bullet.get(j);
-    		if(spaceshipAI.isCollide(temp)) {
-    			System.out.println("COllide" + countCollide);
-    			countCollide++;
-    			HPcountAI--;
-    			bullet.remove(j);
-    		}
-	    }
-	    
-	    for(int f = 0 ; f < ASTEROID_COUNT ; f++) {
-	    	for(int e = 0 ; e < bulletAI.size() ; e++) {
-	    		BulletAI tempAI = bulletAI.get(e);
-	    		if(asteroidLeft[f].isCollide(tempAI)) {
-	    			System.out.println("COllide" + countCollide);
-	    			countCollide++;
-	    			bulletAI.remove(e);
-	    		}
-	    		if(asteroidRight[f].isCollide(tempAI)) {
-	    			System.out.println("COllide" + countCollide);
-	    			countCollide++;
-	    			bulletAI.remove(e);
-	    		}
-	    		
-	    	}
-	    }
-	    for(int k = 0 ; k < bulletAI.size() ; k++) {
-    		BulletAI tempAI = bulletAI.get(k);
-    		if(spaceship.isCollide(tempAI)) {
-    			System.out.println("COllide" + countCollide);
-    			countCollide++;
-    			HPcount--;
-    			bulletAI.remove(k);
-    		}
-	    }
 		//initBulletAI();
-	}
+	//}
 
 	//private void initBulletAI() {
 	//	if(CheckBulletAIWithTimer < timer) {

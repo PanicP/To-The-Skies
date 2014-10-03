@@ -28,11 +28,11 @@ public class SpaceshipAI implements Entity {
 	public void update() {
 		if (x < 80) {
 			x = 80;
-			this.vx = 2;
+			this.vx = 4;
 		}
 		if (x > 640) {
 			x = 640;
-			this.vx = -2;
+			this.vx = -4;
 		}
 		if(ToTheSkies.timer1000 % 1 == 0) {
 			Checkmove = random.nextInt(2);
@@ -40,11 +40,11 @@ public class SpaceshipAI implements Entity {
 //			System.out.println("Count: "+count);
 //			System.out.println("Checkmove: "+Checkmove);
 			if(Checkmove == 1 && ToTheSkies.timer1000 == count) {
-				this.vx = 2;	
+				this.vx = 4;	
 				count += 1;
 			}
 			else if(Checkmove == 0 && ToTheSkies.timer1000 == count){
-				this.vx = -2;	
+				this.vx = -4;	
 				count += 1;
 			}
 			
