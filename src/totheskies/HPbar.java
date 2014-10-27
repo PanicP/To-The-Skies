@@ -35,34 +35,34 @@ public class HPbar implements Entity{
 	
 	@Override
 	public void render() {
-		if(ToTheSkies.HPcount == 10) {
+		if (ToTheSkies.HPcount == 10) {
 			image10.draw(x,y);
 		}
-		if(ToTheSkies.HPcount == 9) {
+		if (ToTheSkies.HPcount == 9) {
 			image9.draw(x,y+15);
 		}
-		if(ToTheSkies.HPcount == 8) {
+		if (ToTheSkies.HPcount == 8) {
 			image8.draw(x,y+30);
 		}
-		if(ToTheSkies.HPcount == 7) {
+		if (ToTheSkies.HPcount == 7) {
 			image7.draw(x,y+45);
 		}
-		if(ToTheSkies.HPcount == 6) {
+		if (ToTheSkies.HPcount == 6) {
 			image6.draw(x,y+60);
 		}
-		if(ToTheSkies.HPcount == 5) {
+		if (ToTheSkies.HPcount == 5) {
 			image5.draw(x,y+75);
 		}
-		if(ToTheSkies.HPcount == 4) {
+		if (ToTheSkies.HPcount == 4) {
 			image4.draw(x,y+90);
 		}
-		if(ToTheSkies.HPcount == 3) {
+		if (ToTheSkies.HPcount == 3) {
 			image3.draw(x,y+105);
 		}
-		if(ToTheSkies.HPcount == 2) {
+		if (ToTheSkies.HPcount == 2) {
 			image2.draw(x,y+120);
 		}
-		if(ToTheSkies.HPcount == 1) {
+		if (ToTheSkies.HPcount == 1) {
 			image1.draw(x,y+135);
 		}
 			

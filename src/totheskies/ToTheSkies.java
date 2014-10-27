@@ -63,13 +63,13 @@ public class ToTheSkies extends BasicGame {
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		background.draw(0,0);
-		for(Entity entity : entities) {
+		for (Entity entity : entities) {
 			entity.render();
 		}
-		for(Bullet bullets : bullet) {
+		for (Bullet bullets : bullet) {
 			bullets.render();
 		}
-		for(BulletAI bulletsAI : bulletAI) {
+		for (BulletAI bulletsAI : bulletAI) {
 			bulletsAI.render();
 		}
 		for (AsteroidLeft AsteroidsLeft : asteroidLeft) {
@@ -187,33 +187,33 @@ public class ToTheSkies extends BasicGame {
 					entity.update(container, delta);
 				}
 	    
-				for(Bullet bullets : bullet) {
+				for (Bullet bullets : bullet) {
 					bullets.update(container, delta);
 				}
-				for(BulletAI bulletsAI : bulletAI) {
+				for (BulletAI bulletsAI : bulletAI) {
 					bulletsAI.update(container, delta);
 				}
-				if(timer % 7 == 0 && timer > 1000) {
+				if (timer % 7 == 0 && timer > 1000) {
 					bulletAI.add(new BulletAI(spaceshipAI.getX()+38,spaceshipAI.getY()+63,BULLETAI_VY));
 				}
-				for(int i = 0 ; i < ASTEROID_COUNT ; i++) {
-					for(int j = 0 ; j < bullet.size() ; j++) {
+				for (int i = 0 ; i < ASTEROID_COUNT ; i++) {
+					for (int j = 0 ; j < bullet.size() ; j++) {
 						Bullet temp = bullet.get(j);
-						if(asteroidLeft[i].isCollide(temp)) {
+						if (asteroidLeft[i].isCollide(temp)) {
 							System.out.println("COllide" + countCollide);
 							countCollide++;
 							bullet.remove(j);
 						}
-						if(asteroidRight[i].isCollide(temp)) {
+						if (asteroidRight[i].isCollide(temp)) {
 							System.out.println("COllide" + countCollide);
 							countCollide++;
 							bullet.remove(j);
 						}
 					}
 				}
-				for(int j = 0 ; j < bullet.size() ; j++) {
+				for (int j = 0 ; j < bullet.size() ; j++) {
 					Bullet temp = bullet.get(j);
-					if(spaceshipAI.isCollide(temp)) {
+					if (spaceshipAI.isCollide(temp)) {
 						System.out.println("COllide" + countCollide);
 						countCollide++;
 						HPcountAI--;
@@ -222,24 +222,24 @@ public class ToTheSkies extends BasicGame {
 					}	
 				}
 	    
-				for(int f = 0 ; f < ASTEROID_COUNT ; f++) {
-					for(int e = 0 ; e < bulletAI.size() ; e++) {
+				for (int f = 0 ; f < ASTEROID_COUNT ; f++) {
+					for (int e = 0 ; e < bulletAI.size() ; e++) {
 						BulletAI tempAI = bulletAI.get(e);
-						if(asteroidLeft[f].isCollide(tempAI)) {
+						if (asteroidLeft[f].isCollide(tempAI)) {
 							System.out.println("COllide" + countCollide);
 							countCollide++;
 							bulletAI.remove(e);
 						}
-						if(asteroidRight[f].isCollide(tempAI)) {
+						if (asteroidRight[f].isCollide(tempAI)) {
 							System.out.println("COllide" + countCollide);
 							countCollide++;
 							bulletAI.remove(e);
 						}
 					}
 				}
-				for(int k = 0 ; k < bulletAI.size() ; k++) {
+				for (int k = 0 ; k < bulletAI.size() ; k++) {
 					BulletAI tempAI = bulletAI.get(k);
-					if(spaceship.isCollide(tempAI)) {
+					if (spaceship.isCollide(tempAI)) {
 						System.out.println("COllide" + countCollide);
 						countCollide++;
 						HPcount--;
@@ -247,7 +247,7 @@ public class ToTheSkies extends BasicGame {
 						soundgothit.play();
 					}
 				}
-				if(HPcount == 0 || HPcountAI == 0)
+				if (HPcount == 0 || HPcountAI == 0)
 				{
 					isStarted = false;
 					//isGameOver = true;

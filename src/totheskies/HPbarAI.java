@@ -35,34 +35,34 @@ public class HPbarAI implements Entity{
 	
 	@Override
 	public void render() {
-		if(ToTheSkies.HPcountAI == 10) {
+		if (ToTheSkies.HPcountAI == 10) {
 			image10.draw(x,y);
 		}
-		if(ToTheSkies.HPcountAI == 9) {
+		if (ToTheSkies.HPcountAI == 9) {
 			image9.draw(x,y+15);
 		}
-		if(ToTheSkies.HPcountAI == 8) {
+		if (ToTheSkies.HPcountAI == 8) {
 			image8.draw(x,y+30);
 		}
-		if(ToTheSkies.HPcountAI == 7) {
+		if (ToTheSkies.HPcountAI == 7) {
 			image7.draw(x,y+45);
 		}
-		if(ToTheSkies.HPcountAI == 6) {
+		if (ToTheSkies.HPcountAI == 6) {
 			image6.draw(x,y+60);
 		}
-		if(ToTheSkies.HPcountAI == 5) {
+		if (ToTheSkies.HPcountAI == 5) {
 			image5.draw(x,y+75);
 		}
-		if(ToTheSkies.HPcountAI == 4) {
+		if (ToTheSkies.HPcountAI == 4) {
 			image4.draw(x,y+90);
 		}
-		if(ToTheSkies.HPcountAI == 3) {
+		if (ToTheSkies.HPcountAI == 3) {
 			image3.draw(x,y+105);
 		}
-		if(ToTheSkies.HPcountAI == 2) {
+		if (ToTheSkies.HPcountAI == 2) {
 			image2.draw(x,y+120);
 		}
-		if(ToTheSkies.HPcountAI == 1) {
+		if (ToTheSkies.HPcountAI == 1) {
 			image1.draw(x,y+135);
 		}
 			

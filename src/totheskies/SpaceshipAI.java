@@ -34,16 +34,16 @@ public class SpaceshipAI implements Entity {
 			x = 640;
 			this.vx = -4;
 		}
-		if(ToTheSkies.timer1000 % 1 == 0) {
+		if (ToTheSkies.timer1000 % 1 == 0) {
 			Checkmove = random.nextInt(2);
 //			System.out.println("Timer: "+ToTheSkies.timer1000);
 //			System.out.println("Count: "+count);
 //			System.out.println("Checkmove: "+Checkmove);
-			if(Checkmove == 1 && ToTheSkies.timer1000 == count) {
+			if (Checkmove == 1 && ToTheSkies.timer1000 == count) {
 				this.vx = 4;	
 				count += 1;
 			}
-			else if(Checkmove == 0 && ToTheSkies.timer1000 == count){
+			else if (Checkmove == 0 && ToTheSkies.timer1000 == count){
 				this.vx = -4;	
 				count += 1;
 			}
